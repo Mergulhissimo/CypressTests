@@ -1,3 +1,8 @@
+JUST A BUNCH OF RANDOM INFORMATION ABOUT PLUGGINS
+
+
+
+
 https://github.com/4teamwork/cypress-drag-drop
 
 In your Cypress spec use the command as follows:
