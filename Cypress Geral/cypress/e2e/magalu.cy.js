@@ -2,11 +2,14 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     return false;
   });
 
+/////////////////////////////////////////////////////////
+
 beforeEach(() => {
     cy.clearAllSessionStorage()
     cy.visit('https://www.magazineluiza.com.br/')
   })
 
+ //////////////////////////////////////////////////////// 
 
   function searchFor(text) {
     cy.get('[data-testid="input-search"]').clear()
@@ -22,6 +25,8 @@ beforeEach(() => {
     cy.get('[data-testid="product-card-container"]').first().click()
     cy.get('[data-testid="bagButton"]',{timeout:6000}).first().click()
   }
+
+ ////////////////////////////////////////////////////////// 
 
 /*it ('Adicionar ao carrinho seguro negado', () => {
     searchFor("Notebook Asus Vivobook Pro 15 Core i9 16GB 512GB")
