@@ -14,16 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './gitlab_gui_commands'
-import './gitlab_api_commands'
-import 'cypress-plugin-xhr-toggle'
-import 'cypress-plugin-api'
-
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // returning false here prevents Cypress from
-    // failing the test
-    return false;
-  });
+import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
