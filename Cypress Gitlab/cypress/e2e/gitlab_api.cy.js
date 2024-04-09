@@ -71,4 +71,27 @@ describe('Testes de API', () => {
     })
 
   })
+
+
+  it('Criação de milestone com Sucesso', () => {
+    const project = {
+        name: `project-${faker.string.uuid()}`,
+        description: faker.lorem.words(10)
+    }
+
+    const milestone = {
+        title: `milestone-${faker.string.uuid()}`,
+    }
+
+    cy.api_createProject(project).then(response => {
+        const projectId = response.body.id;
+        cy.api_createMilestone(milestone, projectId).then(response => {
+              expect(response.status).to.equal(201);
+              expect(response.body.title).to.equal(milestone.title)
+        })
+    })
+
+  })
+
+
 })

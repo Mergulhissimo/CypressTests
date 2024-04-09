@@ -84,11 +84,11 @@ describe('Testes do GitLab', () => {
 
     })
 
-    it('Adicionar label a issue', () => {
+    it('Adicionar label à issue', () => {
 
       const project = {
-          name: `project-${faker.string.uuid()}`,
-          description: faker.lorem.words(10)
+        name: `project-${faker.string.uuid()}`,
+        description: faker.lorem.words(10)
         }  
 
       const issue = {
@@ -119,4 +119,36 @@ describe('Testes do GitLab', () => {
         })
       })
     })
+
+    it('Adicionar milestone à issue', () => {
+        const project = {
+            name: `project-${faker.string.uuid()}`,
+            description: faker.lorem.words(10)
+        }
+    
+        const issue = {
+          title: `issue-${faker.string.uuid()}`,
+          description: faker.lorem.words(3)
+        }
+
+        const milestone = {
+            title: `milestone-${faker.string.uuid()}`,
+        }
+
+        const user = Cypress.env('user_name')
+    
+        cy.api_createProject(project).then(response => {
+          const projectName = response.body.name
+          const projectId = response.body.id
+          cy.api_createIssue(issue, projectId).then(response => {
+            const issueId = response.body.iid
+            cy.api_createMilestone(milestone, projectId).then(response => {
+              cy.visit(`localhost/${user}/${projectName}/issues/${issueId}`)
+              cy.get('[data-track-property="milestone"]').click()
+              cy.contains(milestone.title).click()
+              cy.get('[class="block milestone"]').should('contain', milestone.title)
+            })
+          })
+        })
+      })
 })

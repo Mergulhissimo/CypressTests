@@ -1,6 +1,18 @@
 const accessToken = `Bearer ${Cypress.env('gitlab_access_token')}`
 
 
+Cypress.Commands.add('api_createMilestone', (milestone, projectId) => {
+
+  cy.request({
+    method: 'POST',
+    url: `http://localhost/api/v4/projects/${projectId}/milestones`,
+    body: {
+    title: milestone.title,
+    },
+    headers: { Authorization: accessToken },
+        })
+})
+
 Cypress.Commands.add('api_createLabel', (label, projectId) => {
 
   cy.request({
@@ -13,7 +25,6 @@ Cypress.Commands.add('api_createLabel', (label, projectId) => {
     headers: { Authorization: accessToken },
         })
 })
-
 
 
 Cypress.Commands.add('api_createIssue', (issue, projectId) => {

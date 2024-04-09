@@ -6,6 +6,7 @@ module.exports = defineConfig({
         hideCredentials: true,
         requestMode: true,
       },
+      experimentalRunAllSpecs: true,
   },
   video: false
 });
