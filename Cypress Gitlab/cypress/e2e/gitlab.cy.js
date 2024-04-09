@@ -21,7 +21,7 @@ describe('Testes do GitLab', () => {
         
         })
 
-    it('Criar novo projeto', { env: { snapshotOnly: true } }, () => {
+    it('Criar novo projeto', () => {
 
       const project = {
         name: `project-${faker.string.uuid()}`,
@@ -68,7 +68,7 @@ describe('Testes do GitLab', () => {
     })
 
 
-    it('Acessar tela de cadastro de issue', { env: { snapshotOnly: true } }, () => {
+    it('Acessar tela de cadastro de issue', () => {
 
     const project = {
         name: `project-${faker.string.uuid()}`,
@@ -82,5 +82,41 @@ describe('Testes do GitLab', () => {
     cy.get('.qa-issues-item').click()
     cy.get('[id="new_issue_link"]').click()
 
+    })
+
+    it('Adicionar label a issue', () => {
+
+      const project = {
+          name: `project-${faker.string.uuid()}`,
+          description: faker.lorem.words(10)
+        }  
+
+      const issue = {
+        title: `issue-${faker.string.uuid()}`,
+        description: faker.lorem.words(3)
+      }
+
+      const label = {
+        name: `label-${faker.string.uuid()}`,
+        color: '#ffaabb'
+      }
+
+      const user = Cypress.env('user_name')
+
+      cy.api_createProject(project).then(response => {
+        const projectName = response.body.name
+        const projectId = response.body.id
+        cy.api_createIssue(issue, projectId).then(response => {
+          const issueId = response.body.iid
+          cy.api_createLabel(label, projectId).then(response => {
+              cy.visit(`localhost/${user}/${projectName}/issues/${issueId}`)
+              cy.get('.qa-edit-link-labels').click()
+              cy.contains(label.name).click()
+              cy.get('body').click()
+              cy.get('.qa-labels-block').should('contain', label.name)
+              cy.get('.color-label').should('have.attr', 'style', `background-color: ${label.color}; color: #333333;`)
+          })
+        })
+      })
     })
 })

@@ -4,7 +4,7 @@ module.exports = defineConfig({
   e2e: {
       env: {
         hideCredentials: true,
-        //requestMode: true,
+        requestMode: true,
       },
   },
   video: false

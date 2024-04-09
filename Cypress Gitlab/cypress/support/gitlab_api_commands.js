@@ -1,36 +1,32 @@
 const accessToken = `Bearer ${Cypress.env('gitlab_access_token')}`
 
 
-Cypress.Commands.add('api_createLabel', (label, project) => {
-    cy.api_createProject(project)
-      .then(response => {
-         cy.request({
-             method: 'POST',
-             url: `http://localhost/api/v4/projects/${response.body.id}/labels`,
-             body: {
-             name: label.name,
-             color: label.color,
-            },
-            headers: { Authorization: accessToken },
+Cypress.Commands.add('api_createLabel', (label, projectId) => {
+
+  cy.request({
+    method: 'POST',
+    url: `http://localhost/api/v4/projects/${projectId}/labels`,
+    body: {
+    name: label.name,
+    color: label.color,
+    },
+    headers: { Authorization: accessToken },
         })
-    })
 })
 
 
 
-Cypress.Commands.add('api_createIssue', (issue, project) => {
-    cy.api_createProject(project)
-      .then(response => {
-         cy.request({
-             method: 'POST',
-             url: `http://localhost/api/v4/projects/${response.body.id}/issues`,
-             body: {
-             title: issue.title,
-             description: issue.description,
-            },
-            headers: { Authorization: accessToken },
-        })
-    })
+Cypress.Commands.add('api_createIssue', (issue, projectId) => {
+
+    cy.request({
+      method: 'POST',
+      url: `http://localhost/api/v4/projects/${projectId}/issues`,
+      body: {
+      title: issue.title,
+      description: issue.description,
+    },
+      headers: { Authorization: accessToken },
+  })
 })
 
 
